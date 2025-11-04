@@ -1,0 +1,59 @@
+:root {
+  /* font-family */
+  --ff-main: 'Open Sans', sans-serif;
+
+  /* font-sizes */
+  --fs-large: 2.5rem;
+  --fs-medium: 1rem;
+  --fs-small: 0.75rem;
+
+  /* font-weights */
+  --fw-bold: 700;
+  --fw-semibold: 600;
+
+  /* letter-spacing */
+  --ls-n2: -0.02em;
+  --ls-1: 0.01em;
+  --ls-0: 0em;
+}
+
+body {
+  font-family: var(--ff-main);
+  font-size: var(--fs-medium);
+}
+
+.weather-widget__temperature {
+  font-size: var(--fs-large);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-n2);
+}
+
+.weather-widget__city {
+  font-size: var(--fs-medium);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-1);
+}
+
+.weather-widget__date {
+  font-size: var(--fs-medium);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-0);
+}
+
+.weather-widget__description {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-0);
+}
+
+.widget__message {
+  font-size: var(--fs-medium);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-0);
+}
+
+.widget__button {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-0);
+}

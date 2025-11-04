@@ -5,8 +5,13 @@ import Spinner from './components/Spinner.vue'
 
 const latitude = ref(null)
 const longitude = ref(null)
-const isLoading = ref(true)
+const isLoading = ref(false)
 const errorMessage = ref(null)
+
+function initGeolocation() {
+  isLoading.value = true
+  getUserPosition()
+}
 
 function successGettingGeo(position) {
   errorMessage.value = null
@@ -47,9 +52,7 @@ function getUserPosition() {
 }
 
 onMounted(() => {
-  if (navigator.geolocation) {
-    getUserPosition()
-  } else {
+  if (!navigator.geolocation) {
     errorMessage.value = 'Geolocation is not supported by this browser.'
   }
 })
@@ -57,10 +60,13 @@ onMounted(() => {
 
 <template>
   <div class="weather-app">
+    <div v-if="!latitude && !longitude && !isLoading && !errorMessage" class="geo-widget widget-base widget-state--starting">
+      <button class="widget__button" @click="initGeolocation">Get My Weather</button>
+    </div>
 
-    <div v-if="errorMessage" class="geo-widget widget-base widget-state--error">
+    <div v-else-if="errorMessage" class="geo-widget widget-base widget-state--error">
       <div class="widget__message">{{ errorMessage }}</div>
-      <button class="widget__button" @click="getUserPosition">Try again</button>
+      <button class="widget__button" @click="initGeolocation">Try again</button>
     </div>
 
     <WeatherWidget 
@@ -85,5 +91,11 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+}
+
+.widget-state--starting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -14,6 +14,7 @@ const props = defineProps({
 })
 
 const bgURL = ref(DEFAULT_BACKGROUND_IMAGE)
+const bgImageLoaded = ref(false)
 
 const weather = reactive({
   city: null,
@@ -66,9 +67,13 @@ async function getBackgroundImageURL(city, state) {
   }
 }
 
-function preloadBackgroundImage(imageUrl) {
-  const img = new Image();
-  img.src = imageUrl;
+function waitForImageLoad(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve()
+    img.onerror = () => resolve()
+    img.src = url
+  })
 }
 
 async function getLocationData() {
@@ -111,9 +116,13 @@ async function getWeather() {
     error.value = null
 
     bgURL.value = await getBackgroundImageURL(weather.city, weather.state)
+
+    await waitForImageLoad(bgURL.value)
+    bgImageLoaded.value = true
   } catch (err) {
     error.value = err.message
     bgURL.value = DEFAULT_BACKGROUND_IMAGE
+    bgImageLoaded.value = true
   } finally {
     isLoading.value = false
   }
@@ -180,7 +189,7 @@ onUnmounted(() => {
     <div class="widget__message">Loading weather data...</div>
   </div>
 
-  <div v-else class="weather-widget widget-base weather-widget--content">
+  <div v-else-if="bgImageLoaded" class="weather-widget widget-base weather-widget--content">
     <div class="weather-widget__header"
       :style="{backgroundImage: `linear-gradient(to right,rgba(${bgGradientColor}, 0.25) 0%, rgba(${bgGradientColor}, 0.98) 100%), url(${bgURL})`}"
     >

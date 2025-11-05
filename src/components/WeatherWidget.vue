@@ -44,9 +44,16 @@ function startWeatherUpdate() {
 }
 
 async function getBackgroundImageURL(city, state) {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 5000)
+
   try {
     const searchQuery = (city + ' ' + state).replaceAll(' ', '%20')
-    const response = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchQuery}&client_id=${imageApiKey}&per_page=1`)
+    const response = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchQuery}&client_id=${imageApiKey}&per_page=1`, {
+      signal: controller.signal
+    })
+
+    clearTimeout(timeoutId)
 
     if (!response.ok) return DEFAULT_BACKGROUND_IMAGE
     
@@ -54,8 +61,14 @@ async function getBackgroundImageURL(city, state) {
     return imageData?.results?.[0]?.urls?.regular || DEFAULT_BACKGROUND_IMAGE
 
   } catch {
+    clearTimeout(timeoutId)
     return DEFAULT_BACKGROUND_IMAGE
   }
+}
+
+function preloadBackgroundImage(imageUrl) {
+  const img = new Image();
+  img.src = imageUrl;
 }
 
 async function getLocationData() {

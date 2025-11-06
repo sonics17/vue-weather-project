@@ -29,20 +29,34 @@
 
 .widget__message {
   text-align: center;
+  white-space: pre-line;
   color: #191919;
+  text-transform: uppercase;
+}
+
+.widget__buttons {
+  display: flex;
+  gap: 1rem;
 }
 
 .widget__button {
-  background: #388cb6;
+  background: #385ab6;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .widget__button:hover {
-  background: #2b6d8e;
+  background: #2a4389;
+}
+
+.widget-state--starting {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 360px) {

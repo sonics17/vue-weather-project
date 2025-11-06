@@ -84,7 +84,7 @@ async function getLocationData() {
   try {
     return await response.json()
   } catch {
-    throw new Error('JSON Parsing went wrong')
+    throw new Error('JSON parsing went wrong')
   }
 }
 
@@ -96,7 +96,7 @@ async function getWeatherData() {
   try {
     return await response.json()
   } catch {
-    throw new Error('JSON Parsing went wrong')
+    throw new Error('JSON parsing went wrong')
   }
 }
 
@@ -180,8 +180,8 @@ onUnmounted(() => {
 
 <template>
   <div v-if="error && !isLoading" class="weather-widget widget-base widget-state--error">
-    <div class="widget__message">Something went wrong. Try again.</div>
-    <button class="widget__button" @click="startWeatherUpdate">Try Again</button>
+    <div class="widget__message">Something went wrong<br>Try again.</div>
+    <button class="widget__button" @click="startWeatherUpdate">Try again</button>
   </div>
 
   <div v-else-if="isLoading" class="weather-widget widget-base widget-state--loading">

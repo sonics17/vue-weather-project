@@ -15,11 +15,15 @@
   --ls-n2: -0.02em;
   --ls-1: 0.01em;
   --ls-0: 0em;
+
+  /* line-height */
+  --lh-base: 1.5;
 }
 
 body {
   font-family: var(--ff-main);
   font-size: var(--fs-medium);
+  line-height: var(--lh-base);
 }
 
 .weather-widget__temperature {
